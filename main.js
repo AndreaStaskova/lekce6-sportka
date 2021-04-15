@@ -9,15 +9,8 @@
 
 let osudi = [];
 let tah = [];
-let historieTahu = [];
 let vyherniCisla = document.getElementById("vyherni-cisla");
-let prvniTah = true
-
-function naplnOsudi () {
-    for (let i = 1; i <= 48; i++) {
-        osudi.push(i);
-    }
-}
+let prvniTah = true;
 
 function losuj() {
 
@@ -26,7 +19,7 @@ function losuj() {
         los();
         vypisTah();
         osudi = [];
-        prvniTah = false
+        prvniTah = false;
     } else {
         vyherniCisla.innerHTML = " ";
         vypisHistorii(tah);
@@ -38,21 +31,26 @@ function losuj() {
     }    
 }
 
+function naplnOsudi () {
+
+    for (let i = 1; i <= 48; i++) {
+        osudi.push(i);
+    }
+}
+
 function los() {
-    for (let i = 0; i < 7; i++) {
+
+    for (let i = 0; i < 7; i++) {        
         let vyherniIndex = Math.floor(Math.random() * osudi.length);
         let vyherniCislo = osudi[vyherniIndex];
     
         tah.push(vyherniCislo);
         osudi.splice(vyherniIndex, 1);
-    
-        console.log(osudi);
-        
-        console.log(tah);
     }
 }
 
 function vypisTah() {  
+
     tah.forEach(function(ele, index, arr) {
         setTimeout(function() {
             vyherniCisla.innerHTML += "<span class='cislo'>" + arr[index] + "</span>";
