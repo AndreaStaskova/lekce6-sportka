@@ -8,10 +8,10 @@
 // ... který pak přidej dovnitř prvku <div id="vyherni-cisla">:
 
 let osudi = [];
-let los;
 let tah = [];
 let historieTahu = [];
 let vyherniCisla = document.getElementById("vyherni-cisla");
+let prvniTah = true
 
 function naplnOsudi () {
     for (let i = 1; i <= 48; i++) {
@@ -19,21 +19,26 @@ function naplnOsudi () {
     }
 }
 
-naplnOsudi()
+function losuj() {
 
-let timeOut
-
-/*
-
-function delayedNumber() {
-    timeOut = window.setTimeout(losuj(), 2000)
+    if (prvniTah) {
+        naplnOsudi();
+        los();
+        vypisTah();
+        osudi = [];
+        prvniTah = false
+    } else {
+        vyherniCisla.innerHTML = " ";
+        vypisHistorii(tah);
+        tah = [];
+        naplnOsudi();
+        los();
+        vypisTah();
+        osudi = [];
+    }    
 }
 
-*/
-
-function losuj() {
-    vyherniCisla.innerHTML = " "
-    
+function los() {
     for (let i = 0; i < 7; i++) {
         let vyherniIndex = Math.floor(Math.random() * osudi.length);
         let vyherniCislo = osudi[vyherniIndex];
@@ -42,30 +47,22 @@ function losuj() {
         osudi.splice(vyherniIndex, 1);
     
         console.log(osudi);
+        
         console.log(tah);
     }
-    vypisTah();
-    osudi = [];
+}
+
+function vypisTah() {  
+    tah.forEach(function(ele, index, arr) {
+        setTimeout(function() {
+            vyherniCisla.innerHTML += "<span class='cislo'>" + arr[index] + "</span>";
+        }, index * 2000);
+    })
+}    
+
+
+function vypisHistorii(txt) {
     
-    vypisHistorii();
-    tah = [];
-    naplnOsudi();
+    document.getElementById("historie-tahu").innerText += txt + '\n'; 
+
 }
-
-function vypisTah() {    
-
-    for (let i = 0; i < tah.length; i++) {
-        vyherniCisla.innerHTML += "<span class='cislo'>" + tah[i] + "</span>";
-    }
-}
-
-function vypisHistorii() {
-    historieTahu.push(tah);
-
-    let predesleTahy = document.getElementById("historie-tahu");
-    predesleTahy.textContent = historieTahu
-    
-}
-   
-
-
